@@ -305,3 +305,151 @@ export default React.memo(ItemDrawer);
 
 //   setItemStockData(itemStock);
 // };
+// import { useContext, useEffect, useState } from "react";
+// import { useForm } from "react-hook-form";
+// import { useSelector } from "react-redux";
+// import { SidebarContext } from "context/SidebarContext";
+// import ProductItemServices from "services/ProductItemServices";
+// import { notifyError, notifySuccess } from "utils/toast";
+// import { Input, Textarea } from "@windmill/react-ui";
+// import DrawerButton from "components/form/DrawerButton";
+// import Error from "components/form/Error";
+// import InputArea from "components/form/InputArea";
+// import LabelArea from "components/form/LabelArea";
+// import Title from "components/form/Title";
+// import { Scrollbars } from "react-custom-scrollbars-2";
+// import Select from "react-select";
+// import axios from "axios";
+// import { t } from "i18next";
+// import Uploader from "components/image-uploader/Uploader";
+
+// const CouponDrawer = ({ id }) => {
+//     const { isDrawerOpen, closeDrawer, lang } = useContext(SidebarContext);
+//     const [imageUrl, setImageUrl] = useState([]);
+//     const [resData, setResData] = useState({});
+//     const [language, setLanguage] = useState(lang);
+//     const [isSubmitting, setIsSubmitting] = useState(false);
+//     let [variants, setVariants] = useState([]);
+//     const [products, setProducts] = useState([]);
+//     const [selectedProducts, setSelectedProducts] = useState([]);
+//     const [rawItems, setRawItems] = useState([{ item: null, quantity: 0 }]);
+
+//     const {
+//         register,
+//         handleSubmit,
+//         setValue,
+//         clearErrors,
+//         formState: { errors, reset },
+//     } = useForm();
+
+//     const onSubmit = async (data) => {
+//         try {
+//             setIsSubmitting(true);
+//             const productData = {
+//                 title: data.title,
+//                 description: data.description,
+//                 image: imageUrl,
+//                 variants: data.variant,
+//                 rawItems: rawItems.map((item) => ({ item: item.item.label, quantity: item.quantity })),
+//             };
+
+//             if (id) {
+//                 const res = await ProductItemServices.updateProductItem(id, productData);
+//                 setIsSubmitting(false);
+//                 notifySuccess(res.message);
+//                 setTimeout(() => {
+//                     window.location.reload();
+//                 }, 2000);
+//                 reset();
+//                 closeDrawer();
+//             } else {
+//                 const res = await ProductItemServices.createProductItem(productData);
+//                 setIsSubmitting(false);
+//                 notifySuccess(res.message);
+//                 setResData({
+//                     imageUrl: res.data.image || [],
+//                     variants: res.data.variants || [],
+//                 });
+//                 reset();
+//                 closeDrawer();
+//             }
+//         } catch (err) {
+//             notifyError(err ? err?.response?.data?.message : err.message);
+//             setIsSubmitting(false);
+//             closeDrawer();
+//         }
+//     };
+
+//     // Other useEffect hooks for language, product data fetching, etc. remain the same
+
+//     const handleRawItemChange = (index, item) => {
+//         const newRawItems = [...rawItems];
+//         newRawItems[index].item = item;
+//         newRawItems[index].quantity = 0;
+//         setRawItems(newRawItems);
+//     };
+
+//     const handleQuantityChange = (index, value) => {
+//         const newRawItems = [...rawItems];
+//         newRawItems[index].quantity = value;
+//         setRawItems(newRawItems);
+//     };
+
+//     const handleAddRawItem = () => {
+//         setRawItems([...rawItems, { item: null, quantity: 0 }]);
+//     };
+
+//     const handleRemoveRawItem = (index) => {
+//         const newRawItems = [...rawItems];
+//         newRawItems.splice(index, 1);
+//         setRawItems(newRawItems);
+//     };
+
+//     return (
+//         <>
+//             <div className="w-full relative p-6 border-b border-gray-100 bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 ">
+//                 <Title
+//                     register={register}
+//                     handleSelectLanguage={handleSelectLanguage}
+//                     title={id ? t("Update Product Item") : t("Add Product Item")}
+//                 />
+//             </div>
+//             <Scrollbars className="w-full md:w-7/12 lg:w-8/12 xl:w-8/12">
+//                 <form onSubmit={handleSubmit(onSubmit)}>
+//                     {/* Form fields for other product details */}
+//                     {rawItems.map((rawItem, index) => (
+//                         <div key={index} className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+//                             <LabelArea label={`Raw Item ${index + 1}:`} />
+//                             <div className="col-span-8 sm:col-span-4">
+//                                 <Select
+//                                     name={`item${index}`}
+//                                     options={products.map((product) => ({ value: product._id, label: product.title[language] }))}
+//                                     value={rawItem.item}
+//                                     onChange={(item) => handleRawItemChange(index, item)}
+//                                 />
+//                                 <InputArea
+//                                     register={register}
+//                                     label="Quantity"
+//                                     name={`quantity${index}`}
+//                                     type="number"
+//                                     value={rawItem.quantity}
+//                                     onChange={(e) => handleQuantityChange(index, e.target.value)}
+//                                     placeholder="Product Quantity"
+//                                 />
+//                                 <button type="button" onClick={handleRemoveRawItem(index)} className="mx-4 p-2 bg-red-500 text-white rounded-md">
+//                                     Remove
+//                                 </button>
+//                             </div>
+//                         </div>
+//                     ))}
+//                     <button type="button" onClick={handleAddRawItem} className="mx-4 p-2 bg-green-500 text-white rounded-md">
+//                         Add Raw Item
+//                     </button>
+//                     {/* Remaining form fields */}
+//                 </form>
+//             </Scrollbars>
+//         </>
+//     );
+// };
+
+// export default CouponDrawer;

@@ -121,6 +121,7 @@ const PurchaseRev = () => {
             <tr>
             <TableCell>{t("Sno")}</TableCell>
             <TableCell>{t("Products")}</TableCell>
+            {/* <TableCell>{t("Raw Material Used")}</TableCell> */}
               <TableCell>{("Variants")}</TableCell>
               <TableCell>{("Quantity")}</TableCell>
               <TableCell>{t("Production Price")}</TableCell>

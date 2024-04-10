@@ -29,7 +29,7 @@ const ProductTable = ({ currency, lang }) => {
     const fetchProductItems = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:5055/api/productItem/"
+          "http://localhost:5055/api/productItem/"
         );
         setProducts(response.data);
       } catch (error) {
@@ -74,15 +74,30 @@ const ProductTable = ({ currency, lang }) => {
 
                 <div>
                   <h2 className="text-sm font-medium">
-                  {typeof product.title === 'object' ? product.title.en : product.title}
+                    {typeof product.title === "object"
+                      ? product.title.en
+                      : product.title}
                   </h2>
                 </div>
               </div>
             </TableCell>
             <TableCell>
               <span className="text-sm">
-              {typeof product.description === 'object' ? product.description.en : product.description}
+                {typeof product.description === "object"
+                  ? product.description.en
+                  : product.description}
               </span>
+            </TableCell>
+            <TableCell>
+              <div>
+                {product.selectedItems.map((selectedItem, index) => (
+                  <div key={index}>
+                    <span>items: {selectedItem.item.label}</span>
+                    <br />
+                    <span>quantity: {selectedItem.quantity}</span>
+                  </div>
+                ))}
+              </div>
             </TableCell>
             <TableCell>
               {/* {product.variants.map((variants, index) => (
@@ -92,7 +107,6 @@ const ProductTable = ({ currency, lang }) => {
               ))}{" "}              */}
               <p>{product.variants}</p>
             </TableCell>
-
             <TableCell>
               <EditDeleteButton
                 id={product._id}

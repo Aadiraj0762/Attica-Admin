@@ -48,7 +48,7 @@
 //   useEffect(() => {
 //     const fetchCounts = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:5055/api/dashboard'); // Assuming the API route is set up in your backend
+//         const response = await axios.get('https://attica.onrender.com//api/dashboard'); // Assuming the API route is set up in your backend
 
 //         setCounts({
 //           suppliers: response.data.suppliers || 0,
@@ -130,7 +130,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const response = await axios.get("http://localhost:5055/api/dashboard");
+        const response = await axios.get("https://attica.onrender.com/api/dashboard");
         console.log("API Response:", response.data); // Log API response for debugging
 
         setCounts({
@@ -204,3 +204,8 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
+
+
+

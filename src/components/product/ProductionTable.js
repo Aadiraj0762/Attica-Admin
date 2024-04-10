@@ -69,25 +69,8 @@ const PurchaseTable = ({ lang, isCheck, coupons, setIsCheck }) => {
                 {/* {item._id} */}
                 {item.title}
               </span>
-            </TableCell>
-            {/* <TableCell>
-                  {item?.category?.map((category, index) => (
-                    <span key={category._id}>
-                      {(category.label)}
-                      <br />
-                    </span>
-                  ))}
-                </TableCell>   */}
-            {/* <TableCell>
-                  {item?.products?.map((product, index) => (
-                    <span key={product._id}>
-                      {(product.label)}
-                      <br />
-                    </span>
-                  ))}
-                </TableCell>   */}
+            </TableCell>            
             <TableCell>{item.variants[0].label}</TableCell>
-
             <TableCell>{item.quantity}</TableCell>
             <TableCell>{item.price}</TableCell>
             <TableCell>

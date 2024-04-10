@@ -10,6 +10,7 @@
     "@pathofdev/react-tag-input": "^1.0.7",
     "@react-pdf/font": "2.2.0",
     "@react-pdf/renderer": "2.1.0",
+    "@tailwindcss/forms": "^0.5.7",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -80,18 +81,18 @@
     "react-scripts/**/react-error-overlay": "6.0.9"
   },
   "scripts": {
-    "tailwind:dev": "NODE_OPTIONS='--max-old-space-size=4096' tailwindcss build src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
+    "tailwind:dev": "tailwindcss build src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
     "tailwind:build": "cross-env NODE_ENV=production postcss src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
     "prestart": "npm run tailwind:dev",
     "prebuild": "npm run tailwind:build",
-    "start": "react-scripts --openssl-legacy-provider start",
     "build": "npm run build-tailwind",
     "analyze": "webpack-bundle-analyzer build/bundle-stats.json",
     "cz": "git-cz",
     "release": "release-it",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build-tailwind": "cross-env NODE_ENV=production postcss src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css"
+    "build-tailwind": "cross-env NODE_ENV=production postcss src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
+    "start": "react-scripts --openssl-legacy-provider start"
   },
   "devDependencies": {
     "autoprefixer": "^9.8.8",

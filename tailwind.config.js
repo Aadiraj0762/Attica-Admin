@@ -1,12 +1,11 @@
-// tailwind.config.js
-
 const defaultTheme = require('tailwindcss/defaultTheme');
 const windmill = require('@windmill/react-ui/config');
 
 module.exports = windmill({
   mode: 'jit',
   purge: {
-    enabled: true,  // Ensure purge is enabled
+    mode: 'layers', // Switch to the new layers mode
+    enabled: true,
     content: [
       './src/pages/**/*.{js,ts,jsx,tsx}',
       './public/index.html',

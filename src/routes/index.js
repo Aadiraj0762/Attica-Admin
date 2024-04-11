@@ -5,7 +5,6 @@ import { lazy } from "react";
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Attributes = lazy(() => import("../pages/Attributes"));
 const ChildAttributes = lazy(() => import("../pages/ChildAttributes"));
-const Products = lazy(() => import("../pages/Products"));
 const Product = lazy(() => import("../pages/Product"));
 
 const Items = lazy(() => import("../pages/Items"));
@@ -46,10 +45,10 @@ const routes = [
     path: "/dashboard",
     component: Dashboard,
   },
-  {
-    path: "/production",
-    component: Products,
-  },
+  // {
+  //   path: "/production",
+  //   component: Products,
+  // },
   {
     path:"/product",
     component:Product,

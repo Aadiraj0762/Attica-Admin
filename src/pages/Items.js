@@ -12,7 +12,12 @@ import { SidebarContext } from "context/SidebarContext";
 import ProductTable from "components/product/ProductTable";
 import SelectCategory from "components/form/SelectCategory";
 import MainDrawer from "components/drawer/MainDrawer";
-import ItemDrawer from "components/drawer/ItemDrawer";
+import { showingTranslateValue } from "utils/translate";
+import ShowHideButton from "components/table/ShowHideButton";
+import Tooltip from "components/tooltip/Tooltip";
+import { t } from "i18next";
+import { FiZoomIn } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import CheckBox from "components/form/CheckBox";
 import {
   Button,
@@ -27,6 +32,7 @@ import {
   TableContainer,
   TableFooter,
   TableHeader,
+  Avatar
 } from "@windmill/react-ui";
 import useItemFilter from "hooks/useItemFilter";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
@@ -67,7 +73,7 @@ const Items = () => {
   useEffect(() => {
     // Fetch the data from the API
     fetch(
-      "http://localhost:5055/api/Items?page=1&limit=20&category=&title=&price="
+      "https://attica.onrender.com/api/Items?page=1&limit=20&category=&title=&price="
     ) // Update the API endpoint to the correct URL
       .then((response) => response.json())
       .then((data) => {
@@ -102,13 +108,13 @@ const Items = () => {
 
   return (
     <>
-      <PageTitle>{t("Items")}</PageTitle>
+      <PageTitle>{t("Itemss")}</PageTitle>
       <DeleteModal ids={allId} setIsCheck={setIsCheck} title={title} />
       {/* <DeleteModal ids={[]} setIsCheck={setIsCheck} title={title} /> */}
 
       <BulkActionDrawer ids={allId} title="Items" />
       <MainDrawer>
-        <ItemDrawer id={serviceId} />
+        {/* <ItemDrawer id={serviceId} /> */}
       </MainDrawer>
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <CardBody className="">
@@ -148,7 +154,9 @@ const Items = () => {
               <TableCell className="text-right">{t("ActionsTbl")}</TableCell>
             </tr>
           </TableHeader>
+
           <TableBody>
+
             {item?.map((item, i) => (
               <TableRow key={i + 1}>
                 <TableCell>
@@ -217,18 +225,7 @@ const Items = () => {
                   <ShowHideButton id={item._id} status={item.status} />
                   {/* {item.status} */}
                 </TableCell>
-                <TableCell>
-                  <div className="flex justify-end text-right">                   
-                    <EditDeleteButton
-                      id={product._id}
-                      product={product}
-                      isCheck={isCheck}
-                      handleUpdate={handleUpdate}
-                      handleModalOpen={handleModalOpen}
-                      title={showingTranslateValue(product?.title, lang)}
-                    />
-                  </div>
-                </TableCell>
+             
               </TableRow>
             ))}
           </TableBody>

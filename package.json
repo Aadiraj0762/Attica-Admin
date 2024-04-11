@@ -85,16 +85,17 @@
     "tailwind:build": "cross-env NODE_ENV=production postcss src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
     "prestart": "npm run tailwind:dev",
     "prebuild": "npm run tailwind:build",
-    "build": "npm run build-tailwind",
     "analyze": "webpack-bundle-analyzer build/bundle-stats.json",
     "cz": "git-cz",
     "release": "release-it",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-tailwind": "cross-env NODE_ENV=production postcss src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
-    "start": "react-scripts --openssl-legacy-provider start"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "autoprefixer": "^9.8.8",
     "cross-env": "7.0.2",
     "cssnano": "4.1.10",

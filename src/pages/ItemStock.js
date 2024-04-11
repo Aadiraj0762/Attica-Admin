@@ -287,9 +287,7 @@ const ItemStock = () => {
               <TableCell>{t("Item")}</TableCell>
               <TableCell>{t("Purchased Stock Count")}</TableCell>
               <TableCell>{t("Remaining Count")}</TableCell>
-              <cnter>
                 <TableCell>{t("Last Stock")}</TableCell>
-              </cnter>
             </tr>
           </TableHeader>
           <TableBody>

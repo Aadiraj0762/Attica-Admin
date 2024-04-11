@@ -130,7 +130,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const response = await axios.get("https://attica.onrender.com/api/dashboard");
+        const response = await axios.get("http://localhost:5055/api/dashboard");
         console.log("API Response:", response.data); // Log API response for debugging
 
         setCounts({

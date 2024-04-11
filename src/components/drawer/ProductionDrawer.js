@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { SidebarContext } from "context/SidebarContext";
 import ProductionServices from "services/ProductionServices";
 import { notifyError, notifySuccess } from "utils/toast";
-import { Input } from "@windmill/react-ui";
+import { Input,Button } from "@windmill/react-ui";
 import DrawerButton from "components/form/DrawerButton";
 import Error from "components/form/Error";
 import InputArea from "components/form/InputArea";
@@ -14,18 +14,23 @@ import { Scrollbars } from "react-custom-scrollbars-2";
 import Select from "react-select";
 import axios from "axios";
 import { t } from "i18next";
+import { FiPlus,FiTrash } from "react-icons/fi";
+
 const CouponDrawer = ({ id }) => {
   const { isDrawerOpen, closeDrawer, setIsUpdate, lang } =
     useContext(SidebarContext);
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [quantity, setQuantity] = useState("");
-    const [price, setPrice] = useState("");
-    const [products, setProducts] = useState([]);
-    const [variantOptions, setVariantOptions] = useState([]);
-    const [selectedVariants, setSelectedVariants] = useState(null);
-    const [resData, setResData] = useState({});
-    const [language, setLanguage] = useState(lang);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("");
+  const [products, setProducts] = useState([]);
+  const [variantOptions, setVariantOptions] = useState([]);
+  const [selectedVariants, setSelectedVariants] = useState(null);
+  const [resData, setResData] = useState({});
+  const [language, setLanguage] = useState(lang);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [ProductsItem, setProductsItem] = useState([]);
+
   const {
     register,
     handleSubmit,
@@ -35,7 +40,7 @@ const CouponDrawer = ({ id }) => {
   } = useForm();
 
   useEffect(() => {
-    fetch("http://localhost:5055/api/productItem")
+    fetch(`${process.env.REACT_APP_API_BASE_URL}productItem`)
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -69,8 +74,29 @@ const CouponDrawer = ({ id }) => {
       setSelectedVariants(null);
     }
   };
-
-  
+  useEffect(() => {
+    // Fetch the products data from the API using the environment variable
+    fetch(`${process.env.REACT_APP_API_BASE_URL}items`)
+      .then((response) => response.json())
+      .then((data) => setProductsItem(data.products))
+      .catch((error) => console.error("Error fetching products:", error));
+  }, []);
+  const addItem = () => {
+    setSelectedItems([...selectedItems, { item: null, quantity: 0 }]);
+    console.log("Selected Items:", selectedItems);
+  };
+  // Function to remove an item from the selected items list
+  const removeItem = (index) => {
+    // Check if there is more than one item in the selectedItems array
+    if (selectedItems.length > 1) {
+      const updatedItems = [...selectedItems];
+      updatedItems.splice(index, 1);
+      setSelectedItems(updatedItems);
+      console.log("Selected Items:", updatedItems);
+    } else {
+      console.log("At least one item must remain in selectedItems array.");
+    }
+  };
   const onSubmit = async (data) => {
     console.log("coupon data", data);
     try {
@@ -81,6 +107,13 @@ const CouponDrawer = ({ id }) => {
         price: data.price,
         products: [selectedProduct],
         variants: [selectedVariants],
+        selectedItems: selectedItems.map((item) => ({
+          item: {
+            value: item.item.value,
+            label: item.item.label,
+          },
+          quantity: item.quantity,
+        })),
       };
       if (id) {
         const res = await ProductionServices.updateProduction(id, couponData);
@@ -114,36 +147,36 @@ const CouponDrawer = ({ id }) => {
   };
   useEffect(() => {
     // Reset state when drawer is opened
-//     if (isDrawerOpen) {
-//       setSelectedSupplier(null);
-//       setSelectedCategory(null);
-//       setQuantity("");
-//       setPrice("");
-//       setSelectedProduct(null);
-//       setResData({});
-//       clearErrors(); // Clear form errors
-//     }
-//   }, [isDrawerOpen, clearErrors]);
+    //     if (isDrawerOpen) {
+    //       setSelectedSupplier(null);
+    //       setSelectedCategory(null);
+    //       setQuantity("");
+    //       setPrice("");
+    //       setSelectedProduct(null);
+    //       setResData({});
+    //       clearErrors(); // Clear form errors
+    //     }
+    //   }, [isDrawerOpen, clearErrors]);
 
-//   useEffect(() => {
-//     // Handle form data initialization and updates
-//     if (!isDrawerOpen) {
-//       setResData({});
-//       setValue("selectedSupplier", "");
-//       setValue("selectedCategory", "");
-//       setValue("quantity", "");
-//       setValue("price", "");
-//       setValue("selectedProduct", "");
-//       setValue("title", "");
-//       clearErrors("selectedSupplier");
-//       clearErrors("selectedCategory");
-//       clearErrors("quantity");
-//       clearErrors("price");
-//       clearErrors("selectedProduct");
-//       clearErrors("title");
+    //   useEffect(() => {
+    //     // Handle form data initialization and updates
+    //     if (!isDrawerOpen) {
+    //       setResData({});
+    //       setValue("selectedSupplier", "");
+    //       setValue("selectedCategory", "");
+    //       setValue("quantity", "");
+    //       setValue("price", "");
+    //       setValue("selectedProduct", "");
+    //       setValue("title", "");
+    //       clearErrors("selectedSupplier");
+    //       clearErrors("selectedCategory");
+    //       clearErrors("quantity");
+    //       clearErrors("price");
+    //       clearErrors("selectedProduct");
+    //       clearErrors("title");
 
-//       return;
-//     }
+    //       return;
+    //     }
 
     if (id) {
       (async () => {
@@ -152,13 +185,23 @@ const CouponDrawer = ({ id }) => {
           if (res) {
             setResData(res);
             setValue("title", res.title[language || "en"]);
-            
+
             setQuantity(res.quantity);
             setPrice(res.price);
             setSelectedProduct({
               value: res.products[0].value,
               label: res.products[0].label,
             });
+            const transformedSelectedItems = res.selectedItems.map((item) => ({
+              item: {
+                value: item.item.value,
+                label: item.item.label,
+              },
+              quantity: item.quantity,
+            }));
+
+            // Set the transformed selectedItems state
+            setSelectedItems(transformedSelectedItems);
           }
         } catch (err) {
           notifyError(err ? err?.response?.data?.message : err.message);
@@ -175,28 +218,6 @@ const CouponDrawer = ({ id }) => {
     setLanguage,
     language,
   ]);
-  // const handleSupplierChange = (selected) => {
-  //   setSelectedSupplier(selected);
-  //   // Preserve quantity if already set
-  //   if (!quantity) {
-  //     setQuantity("");
-  //   }
-  //   // Preserve price if already set
-  //   if (!price) {
-  //     setPrice("");
-  //   }
-  // };
-  // const handleCategoryChange = (selected) => {
-  //   setSelectedCategory(selected);
-  //   // Preserve quantity if already set
-  //   if (!quantity) {
-  //     setQuantity("");
-  //   }
-  //   // Preserve price if already set
-  //   if (!price) {
-  //     setPrice("");
-  //   }
-  // };
 
   return (
     <>
@@ -210,11 +231,84 @@ const CouponDrawer = ({ id }) => {
       <Scrollbars className="w-full md:w-7/12 lg:w-8/12 xl:w-8/12">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="px-6 pt-8 flex-grow scrollbar-hide w-full max-h-full pb-40">
+           <center> <span>Select The Raw Materials From the Below Select Box</span></center>
+            <br />
+            <Button
+              // id="styleButton"
+              onClick={addItem}
+              className="rounded-md h-12"
+            >
+              <span className="mr-2">
+                <FiPlus />
+              </span>
+              {t("Add")}
+            </Button>
+            {/* <button id="styleButton" className="col-span-4" onClick={addItem}>
+              +
+            </button> */}
+            {selectedItems.map((selected, index) => (
+              <div
+                key={index}
+                className="flex items-center space-x-2 col-span-8 sm:col-span-4"
+              >
+                <Select
+                  id="alignSelect"
+                  name={`item-${index}`}
+                  className="col-span-5 h-12"
+                  options={
+                    ProductsItem &&
+                    ProductsItem.map((product) => ({
+                      value: product._id,
+                      label: product.title.en,
+                    }))
+                  }
+                  value={selected.item || null}
+                  onChange={(selectedOption) => {
+                    const updatedItems = [...selectedItems];
+                    updatedItems[index].item = selectedOption;
+                    setSelectedItems(updatedItems);
+                  }}
+                />
+                <Input
+                  style={{ marginBottom: "10px" }}
+                  type="number"
+                  className="border h-12 text-sm  col-span-5 block bg-gray-100 dark:bg-white border-transparent focus:bg-white"
+                  value={selected.quantity}
+                  onChange={(e) => {
+                    const updatedItems = [...selectedItems];
+                    updatedItems[index].quantity = e.target.value;
+                    setSelectedItems(updatedItems);
+                  }}
+                />
+                <Button
+              // id="styleButton"
+              onClick={() => removeItem(index)}
+              className=" btn btn-danger  rounded-sm h-12 "
+              id="removeItem"
+              style={{backgroundColor:"#ff0000", marginBottom:"10px"}}
+            >
+              <span className="mr-2">
+              <b> <FiTrash style={{color:"#ffffff",}} /></b>
+              </span>
+              {/* {t("Remove")} */}
+            </Button>
+                {/* <button
+                  onClick={() => removeItem(index)}
+                  className="bg-red-500 text-white col-span-4 w-full"
+                >
+                  -
+                </button> */}
+              </div>
+            ))}
+            <br />
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <LabelArea label={"Items : "} />
               <div className="col-span-8 sm:col-span-4">
                 <Select
-                  options={products.map(product => ({ value: product._id, label: product.title }))}
+                  options={products.map((product) => ({
+                    value: product._id,
+                    label: product.title,
+                  }))}
                   value={selectedProduct}
                   onChange={handleProductChange}
                 />
@@ -240,7 +334,7 @@ const CouponDrawer = ({ id }) => {
                   type="text"
                   value={quantity}
                   placeholder="20"
-                  onChange={event => setQuantity(event.target.value)}
+                  onChange={(event) => setQuantity(event.target.value)}
                   className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
                 />
               </div>
@@ -257,7 +351,7 @@ const CouponDrawer = ({ id }) => {
                   maxValue={2000}
                   minValue={1}
                   label="Price"
-                  onChange={event => setPrice(event.target.value)}
+                  onChange={(event) => setPrice(event.target.value)}
                   className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
                 />
               </div>
@@ -271,5 +365,6 @@ const CouponDrawer = ({ id }) => {
 };
 
 export default CouponDrawer;
+
 
 

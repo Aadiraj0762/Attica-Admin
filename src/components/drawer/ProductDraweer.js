@@ -41,13 +41,13 @@ const CouponDrawer = ({ id }) => {
         description: data.description,
         image: imageUrl,
         variants: data.variant,
-        selectedItems: selectedItems.map((item) => ({
-          item: {
-            value: item.item.value,
-            label: item.item.label,
-          },
-          quantity: item.quantity,
-        })),
+        // selectedItems: selectedItems.map((item) => ({
+        //   item: {
+        //     value: item.item.value,
+        //     label: item.item.label,
+        //   },
+        //   quantity: item.quantity,
+        // })),
       };
       if (id) {
         const res = await ProductItemServices.updateProductItem(
@@ -113,16 +113,16 @@ const CouponDrawer = ({ id }) => {
             setValue("description", res.description);
             setVariants(res.variant);
             setImageUrl(res.image);
-            const transformedSelectedItems = res.selectedItems.map((item) => ({
-              item: {
-                value: item.item.value,
-                label: item.item.label,
-              },
-              quantity: item.quantity,
-            }));
+            // const transformedSelectedItems = res.selectedItems.map((item) => ({
+            //   item: {
+            //     value: item.item.value,
+            //     label: item.item.label,
+            //   },
+            //   quantity: item.quantity,
+            // }));
 
-            // Set the transformed selectedItems state
-            setSelectedItems(transformedSelectedItems);
+            // // Set the transformed selectedItems state
+            // setSelectedItems(transformedSelectedItems);
           }
         } catch (err) {
           notifyError(err ? err?.response?.data?.message : err.message);
@@ -130,29 +130,31 @@ const CouponDrawer = ({ id }) => {
       })();
     }
   }, [id, setValue, setLanguage, language]);
-  useEffect(() => {
-    // Fetch the products data from the API
-    fetch("http://localhost:5055/api/items")
-      .then((response) => response.json())
-      .then((data) => setProducts(data.products))
-      .catch((error) => console.error("Error fetching products:", error));
-  }, []);
-  const addItem = () => {
-    setSelectedItems([...selectedItems, { item: null, quantity: 0 }]);
-    console.log("Selected Items:", selectedItems);
-  };
-  // Function to remove an item from the selected items list
-  const removeItem = (index) => {
-    // Check if there is more than one item in the selectedItems array
-    if (selectedItems.length > 1) {
-      const updatedItems = [...selectedItems];
-      updatedItems.splice(index, 1);
-      setSelectedItems(updatedItems);
-      console.log("Selected Items:", updatedItems);
-    } else {
-      console.log("At least one item must remain in selectedItems array.");
-    }
-  };
+
+//   useEffect(() => {
+//     // Fetch the products data from the API using the environment variable
+//     fetch(`${process.env.REACT_APP_API_BASE_URL}items`)
+//       .then((response) => response.json())
+//       .then((data) => setProducts(data.products))
+//       .catch((error) => console.error("Error fetching products:", error));
+// }, []);
+
+//   const addItem = () => {
+//     setSelectedItems([...selectedItems, { item: null, quantity: 0 }]);
+//     console.log("Selected Items:", selectedItems);
+//   };
+//   // Function to remove an item from the selected items list
+//   const removeItem = (index) => {
+//     // Check if there is more than one item in the selectedItems array
+//     if (selectedItems.length > 1) {
+//       const updatedItems = [...selectedItems];
+//       updatedItems.splice(index, 1);
+//       setSelectedItems(updatedItems);
+//       console.log("Selected Items:", updatedItems);
+//     } else {
+//       console.log("At least one item must remain in selectedItems array.");
+//     }
+//   };
 
   return (
     <>
@@ -167,7 +169,7 @@ const CouponDrawer = ({ id }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
             {" "}
-            <button onClick={addItem}>+</button>
+            {/* <button onClick={addItem}>+</button>
             {selectedItems.map((selected, index) => (
               <div
                 key={index}
@@ -210,7 +212,7 @@ const CouponDrawer = ({ id }) => {
                 </button>
               </div>
             ))}
-            <br />
+            <br /> */}
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <LabelArea label={t("Product Name")} />
               <div className="col-span-8 sm:col-span-4">

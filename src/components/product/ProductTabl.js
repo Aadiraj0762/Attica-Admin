@@ -88,7 +88,7 @@ const ProductTable = ({ currency, lang }) => {
                   : product.description}
               </span>
             </TableCell>
-            <TableCell>
+            {/* <TableCell>
               <div>
                 {product.selectedItems.map((selectedItem, index) => (
                   <div key={index}>
@@ -98,7 +98,7 @@ const ProductTable = ({ currency, lang }) => {
                   </div>
                 ))}
               </div>
-            </TableCell>
+            </TableCell> */}
             <TableCell>
               {/* {product.variants.map((variants, index) => (
                 <div key={index}>

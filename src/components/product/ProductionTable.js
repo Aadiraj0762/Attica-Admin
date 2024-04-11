@@ -69,8 +69,19 @@ const PurchaseTable = ({ lang, isCheck, coupons, setIsCheck }) => {
                 {/* {item._id} */}
                 {item.title}
               </span>
-            </TableCell>            
-            <TableCell>{item.variants[0].label}</TableCell>
+            </TableCell>      
+            <TableCell>
+              <div>
+                {item.selectedItems.map((selectedItem, index) => (
+                  <div key={index}>
+                    <span>items: {selectedItem.item.label}</span>
+                    <br />
+                    <span>quantity: {selectedItem.quantity}</span>
+                  </div>
+                ))}
+              </div>
+            </TableCell>
+            <TableCell>{item.variants[0]?.label}</TableCell> {/* Add the safe navigation operator ?. */}
             <TableCell>{item.quantity}</TableCell>
             <TableCell>{item.price}</TableCell>
             <TableCell>
@@ -92,3 +103,7 @@ const PurchaseTable = ({ lang, isCheck, coupons, setIsCheck }) => {
 };
 
 export default PurchaseTable;
+
+
+
+

@@ -19,7 +19,7 @@ const AddSupplier = () => {
 
 useEffect(() => {
   // Fetch the products data from the API
-  fetch('http://localhost:5055/api/products')
+  fetch('https://attica.onrender.com/api/products')
     .then(response => response.json())
     .then(data => setProducts(data.products))
     .catch(error => console.error('Error fetching products:', error));
@@ -37,7 +37,7 @@ useEffect(() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5055/api/supplier/add', formData);
+      await axios.post('https://attica.onrender.com/api/supplier/add', formData);
       alert('Supplier added successfully!');
       setFormData({
         SupplierId: '',
@@ -101,7 +101,7 @@ export default AddSupplier;
 
 //   useEffect(() => {
 //     // Fetch the products data from the API
-//     fetch('http://localhost:5055/api/products')
+//     fetch('https://attica.onrender.com/api/products')
 //       .then(response => response.json())
 //       .then(data => setProducts(data.products))
 //       .catch(error => console.error('Error fetching products:', error));

@@ -41,7 +41,7 @@ const CouponDrawer = ({ id }) => {
   } = useForm();
 
   useEffect(() => {
-    fetch("http://localhost:5055/api/items")
+    fetch("https://attica.onrender.com/api/items")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data.products);
@@ -76,7 +76,7 @@ const CouponDrawer = ({ id }) => {
   useEffect(() => {
     const fetchSuppliers = async () => {
       try {
-        const response = await axios.get("http://localhost:5055/api/supplier/");
+        const response = await axios.get("https://attica.onrender.com/api/supplier/");
         setSuppliers(response.data);
       } catch (error) {
         console.error("Error fetching suppliers:", error);

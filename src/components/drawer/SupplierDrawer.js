@@ -47,7 +47,7 @@ const CreatePurchase = ({ id }) => {
   };
   useEffect(() => {
     axios
-      .get("http://localhost:5055/api/products")
+      .get("https://attica.onrender.com/api/products")
       .then((response) => {
         setProducts(response.data.products);
       })
@@ -72,7 +72,7 @@ const CreatePurchase = ({ id }) => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5055/api/supplier/add",
+        "https://attica.onrender.com/api/supplier/add",
         purchase
       );
       if (response.status === 200) {
@@ -89,7 +89,7 @@ const CreatePurchase = ({ id }) => {
   };
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(`http://localhost:5055/api/supplier/${supplierId}`, formData);
+      const response = await axios.put(`https://attica.onrender.com/api/supplier/${supplierId}`, formData);
       if (response.status === 200) {
         toast.success('Supplier updated successfully');
         setTimeout(() => {
@@ -105,7 +105,7 @@ const CreatePurchase = ({ id }) => {
   useEffect(() => {
     const fetchSupplierById = async () => {
       try {
-        const response = await axios.get(`http://localhost:5055/api/supplier/${supplierId}`);
+        const response = await axios.get(`https://attica.onrender.com/api/supplier/${supplierId}`);
         const { data } = response;
         setFormData((prevData) => ({
           ...prevData,

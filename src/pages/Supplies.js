@@ -69,7 +69,7 @@ const Coupons = () => {
 
   const deleteApi = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5055/api/Supplies/Supplies/${id}`, {
+      const response = await fetch(`https://attica.onrender.com/api/Supplies/Supplies/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const Coupons = () => {
   };
   useEffect(() => {
     // Fetch the data from the API
-    fetch('http://localhost:5055/api/Supplies/Supplies') // Update the API endpoint to the correct URL
+    fetch('https://attica.onrender.com/api/Supplies/Supplies') // Update the API endpoint to the correct URL
       .then(response => response.json())
       .then(data => {
         setData(data);

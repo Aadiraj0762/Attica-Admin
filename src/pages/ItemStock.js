@@ -221,7 +221,7 @@ const ItemStock = () => {
   };
 
   const calculateRemainingStock = () => {
-    fetch("http://localhost:5055/api/productions/")
+    fetch("https://attica.onrender.com/api/productions/")
       .then((response) => response.json())
       .then((productionData) => {
         const tempRemainingStockMap = new Map();

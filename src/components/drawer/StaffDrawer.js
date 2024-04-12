@@ -209,7 +209,7 @@ export default StaffDrawer;
 
 //   useEffect(() => {
 //     // Fetch the products data from the API
-//     fetch('http://localhost:5055/api/products')
+//     fetch('https://attica.onrender.com/api/products')
 //       .then(response => response.json())
 //       .then(data => setProducts(data.products))
 //       .catch(error => console.error('Error fetching products:', error));

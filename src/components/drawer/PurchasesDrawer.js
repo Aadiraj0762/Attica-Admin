@@ -44,7 +44,7 @@ const CreatePurchase = (id) => {
 
     try {
       const response = await fetch(
-        "http://localhost:5055/api/purchases/addpurchases",
+        "https://attica.onrender.com/api/purchases/addpurchases",
         {
           method: "POST",
           headers: {
@@ -71,7 +71,7 @@ const CreatePurchase = (id) => {
 
   useEffect(() => {
     // Fetch the products data from the API
-    fetch("http://localhost:5055/api/products")
+    fetch("https://attica.onrender.com/api/products")
       .then((response) => response.json())
       .then((data) => setProducts(data.products))
       .catch((error) => console.error("Error fetching products:", error));
@@ -80,7 +80,7 @@ const CreatePurchase = (id) => {
   useEffect(() => {
     const fetchCategoryData = async () => {
       try {
-        const response = await axios.get("http://localhost:5055/api/category");
+        const response = await axios.get("https://attica.onrender.com/api/category");
         const data = response.data;
         const options = data.flatMap((parentCategory) => ({
           value: parentCategory._id,
@@ -104,7 +104,7 @@ const CreatePurchase = (id) => {
   useEffect(() => {
     const fetchSuppliers = async () => {
       try {
-        const response = await axios.get("http://localhost:5055/api/supplier/");
+        const response = await axios.get("https://attica.onrender.com/api/supplier/");
         setSuppliers(response.data);
       } catch (error) {
         console.error("Error fetching suppliers:", error);

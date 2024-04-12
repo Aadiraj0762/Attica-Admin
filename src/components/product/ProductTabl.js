@@ -29,7 +29,7 @@ const ProductTable = ({ currency, lang }) => {
     const fetchProductItems = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5055/api/productItem/"
+          "https://attica.onrender.com/api/productItem/"
         );
         setProducts(response.data);
       } catch (error) {

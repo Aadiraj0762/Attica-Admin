@@ -49,7 +49,7 @@
 //     setFormData({ ...formData, [name]: value });
 //   };
 //   useEffect(() => {
-//     axios.get('http://localhost:5055/api/products')
+//     axios.get('https://attica.onrender.com/api/products')
 //       .then(response => {
 //         setProducts(response.data.products);
 //       })
@@ -74,7 +74,7 @@
 //       longitude
 //     };
 //     try {
-//       const response = await axios.post('http://localhost:5055/api/Seller/add', purchase);
+//       const response = await axios.post('https://attica.onrender.com/api/Seller/add', purchase);
 
 //       if (response.status === 200) {
 //         toast.success('Seller created');
@@ -310,7 +310,7 @@
 // //     };
 
 // //     try {
-// //       const response = await fetch("http://localhost:5055/api/purchases/addpurchases", {
+// //       const response = await fetch("https://attica.onrender.com/api/purchases/addpurchases", {
 // //         method: "POST",
 // //         headers: {
 // //           "Content-Type": "application/json",
@@ -331,7 +331,7 @@
 // //   };
 // //   useEffect(() => {
 // //     // Fetch the products data from the API
-// //     fetch('http://localhost:5055/api/products')
+// //     fetch('https://attica.onrender.com/api/products')
 // //       .then(response => response.json())
 // //       .then(data => setProducts(data.products))
 // //       .catch(error => console.error('Error fetching products:', error));
@@ -340,7 +340,7 @@
 // //   useEffect(() => {
 // //     const fetchCategoryData = async () => {
 // //       try {
-// //         const response = await axios.get('http://localhost:5055/api/category');
+// //         const response = await axios.get('https://attica.onrender.com/api/category');
 // //         const data = response.data;
 // //         const options = data.flatMap(parentCategory => {
 // //           return {
@@ -517,7 +517,7 @@ const SellerRevDrawer = ({ id }) => {
   };
   useEffect(() => {
     // Fetch the products data from the API
-    fetch("http://localhost:5055/api/products")
+    fetch("https://attica.onrender.com/api/products")
       .then((response) => response.json())
       .then((data) => setProducts(data.products))
       .catch((error) => console.error("Error fetching products:", error));
